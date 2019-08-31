@@ -6,6 +6,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var dns = require('dns');
 var cors = require('cors');
+require('dotenv').config();
 
 var app = express();
 
@@ -14,7 +15,7 @@ var port = process.env.PORT || 3000;
 
 /** this project needs a db !! **/ 
 // mongoose.connect(process.env.MONGOLAB_URI);
-mongoose.connect(process.env.MONGO_URI, function(err) {
+mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }, function(err) {
   if (err) { 
     console.log(err);
     } else {
