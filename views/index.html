@@ -24,11 +24,12 @@
         <p>
           example: <code>POST [project_url]/api/shorturl/new</code> - <code>https://www.google.com</code>
         </p>
-        <form action="api/shorturl/new" method="POST">
+        <form id="urlForm">
           <label for="url_input">URL to be shortened</label>
           <input id="url_input" type="text" name="url" value="https://www.freecodecamp.org">
           <input type="submit" value="POST URL">
         </form>
+        <p id="newUrl"></p>
         <h3>Example Usage:</h3>
         <a href="https://cobalt-barracuda.glitch.me/api/shorturl/1">
           https://cobalt-barracuda.glitch.me/api/shorturl/1
@@ -42,6 +43,25 @@
           Coded by Erik O. for a <a href="https://www.freecodecamp.org">freeCodeCamp</a> project.
         </p>
       </div>
+
+      <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+            crossorigin="anonymous"></script>
+      <script>
+        $(function() {
+          $("#urlForm").submit(function(e) {
+            $.ajax({
+              url: "/api/shorturl/new",
+              type: "post",
+              data: $("#urlForm").serialize(),
+              success: function(data) {
+                $("#newUrl").text(data);
+              }
+            });
+            e.preventDefault();
+          })
+        })
+      </script>
    </body>
 
 

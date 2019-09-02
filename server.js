@@ -47,15 +47,6 @@ var shortUrlSchema = new mongoose.Schema({
 });
 
 var ShortUrl = mongoose.model("ShortUrl", shortUrlSchema);
-//create one record to start database
-/*var createAndSaveShortUrl = function(done) {
-  var BestBuy = new ShortUrl({original_url: "https://www.bestbuy.com", short_url: 0});
-  BestBuy.save(function (err, BestBuy) {
-    if (err) return done(err);
-    done(null, BestBuy);
-    console.log(BestBuy);
-  })
-};*/
 
 app.get("/api/shorturl/:urlCount", function(req, res, next) {
   var urlCount = req.params.urlCount;
@@ -105,7 +96,7 @@ app.post("/api/shorturl/new", function(req, res, next) {
         } else {
           console.log(record);
           count += 1;
-          res.json({"original_url": document.original_url, "short_url": document.short_url});
+          res.send("Your new short URL is: localost:3000/api/shorturl/" + record.short_url);
         }
     });
   };
@@ -116,7 +107,7 @@ app.post("/api/shorturl/new", function(req, res, next) {
             console.log(err);
         } else {
             if (doc !== null) { //if url found send url and short url
-                res.json({"original_url": doc.original_url, "short_url": doc.short_url});
+                res.send("Your short URL is: localost:3000/api/shorturl/" + doc.short_url);
             } else {
                 createNewShortUrlDocument(originalUrl); //if not found add to database
             }
@@ -124,21 +115,22 @@ app.post("/api/shorturl/new", function(req, res, next) {
     })
   };
 
-  var regex = /^https?:\/\/www/; //need this format for redirect
+  var regex = /^https?:\/\//; //need this format for res.redirect
   
   if (regex.test(url)) {
   var dnsUrl = url.slice(url.indexOf("//") + 2); //need to remove http(s):// to pass to dns.lookup
   dns.lookup(dnsUrl, function(err, address, family) {  //check for valid url
-    if (address !== undefined) {
-      console.log(address);
+    if (err) { console.log(err); }
+    else if (address !== undefined) {
+      console.log("address: " + address);
       findOriginalUrl(url); //check to see if url exists in database
     } else {
-      res.json({'error': "not a valid URL"});
-      console.log(dnsUrl);
+      res.send("not a valid URL");
+      console.log("dnsUrl: " + dnsUrl);
     }
   });  //dns.lookup
   } else {
-  res.json({"error": "invalid URL format"})
+  res.send("invalid URL format");
 }
 });
 
