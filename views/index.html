@@ -13,38 +13,47 @@
   <header>
       <h2>URL Shortener Microservice</h2>
   </header>
-  <div class="container">
-    <div id="into">
+  <main>
+    <div id="purpose">
       <div id="why">
         <p>
-          <b>Why?</b>  A long URL distracts readers from your message.  Also, in situations where there are character liimts, a long URL uses too many characters.
+          <b>Why?</b>  A long URL distracts readers from your message.  Also, in situations where there are character limits, a long URL uses too many characters.
+        </p>
+        <p>
+          Instead of this: <a href="https://guide.freecodecamp.org/algorithms/search-algorithms/searching-linked-lists-versus-arrays/" target="_blank" rel="noopener noreferrer">https://guide.freecodecamp.org/algorithms/search-algorithms/searching-linked-lists-versus-arrays/</a>
+        </p>
+        <p>
+          Use this: <a href="localhost:3000/url/15" target="_blank" rel="noopener noreferrer">localhost:3000/url/15</a>
+        </p>
+        <p>
+          Try it yourself.  Both links above direct you to the same webpage!
+        </p>
+        <p>
+          Create a short URL below!
         </p>
       </div>
     </div>
     
     <h3>Create a short URL</h3>
-    <p>
-      example: <code>POST [project_url]/api/shorturl/new</code> - <code>https://www.google.com</code>
-    </p>
     <form id="urlForm">
       <label for="url_input">URL to be shortened</label>
       <input id="url_input" type="text" name="url" value="https://www.freecodecamp.org">
-      <input type="submit" value="POST URL">
+      <button type="submit" class="btn btn-primary">
+        Get URL
+      </button>  
     </form>
-    <p id="newUrl"></p>
-    <h3>Example Usage:</h3>
-    <a href="https://cobalt-barracuda.glitch.me/api/shorturl/1">
-      https://cobalt-barracuda.glitch.me/api/shorturl/1
-    </a>
-
-    <h3>Will Redirect to:</h3>
-    <p>https://www.google.com</p>
-  </div>
-  <div class="footer">
+    <div id="newUrlBox">
+      <p>
+        Your short URL will appear here:
+      </p>
+      <p id="newUrl"></p>
+    </div>
+  </main>
+  <footer>
     <p>
       Coded by Erik O. for a <a href="https://www.freecodecamp.org">freeCodeCamp</a> project.
     </p>
-  </div>
+  </footer>
 
   <script src="https://code.jquery.com/jquery-2.2.1.min.js"
         integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
@@ -53,7 +62,7 @@
     $(function() {
       $("#urlForm").submit(function(e) {
         $.ajax({
-          url: "/api/shorturl/new",
+          url: "/url/new",
           type: "post",
           data: $("#urlForm").serialize(),
           success: function(data) {
