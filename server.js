@@ -1,7 +1,6 @@
 'use strict';
 
 var express = require('express');
-var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var dns = require('dns');
@@ -13,8 +12,6 @@ var app = express();
 // Basic Configuration 
 var port = process.env.PORT || 3000;
 
-/** this project needs a db !! **/ 
-// mongoose.connect(process.env.MONGOLAB_URI);
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }, function(err) {
   if (err) { 
     console.log(err);
@@ -48,7 +45,7 @@ var shortUrlSchema = new mongoose.Schema({
 
 var ShortUrl = mongoose.model("ShortUrl", shortUrlSchema);
 
-app.get("/api/shorturl/:urlCount", function(req, res, next) {
+app.get("/url/:urlCount", function(req, res, next) {
   var urlCount = req.params.urlCount;
   var findShortUrl = function(shortUrl) {
         ShortUrl.findOne({short_url: shortUrl}, function(err, doc){
@@ -83,7 +80,7 @@ var countDocs = ShortUrl.countDocuments({}, function(err, docCount) {
       }
     });
 
-app.post("/api/shorturl/new", function(req, res, next) {
+app.post("/url/new", function(req, res, next) {
   var url = req.body.url;
   console.log(url);
 
@@ -96,7 +93,7 @@ app.post("/api/shorturl/new", function(req, res, next) {
         } else {
           console.log(record);
           count += 1;
-          res.send("Your new short URL is: localost:3000/api/shorturl/" + record.short_url);
+          res.send("Your short URL is: localhost:3000/api/shorturl/" + record.short_url);
         }
     });
   };
@@ -107,7 +104,7 @@ app.post("/api/shorturl/new", function(req, res, next) {
             console.log(err);
         } else {
             if (doc !== null) { //if url found send url and short url
-                res.send("Your short URL is: localost:3000/api/shorturl/" + doc.short_url);
+                res.send("Your short URL is: localhost:3000/url/" + doc.short_url);
             } else {
                 createNewShortUrlDocument(originalUrl); //if not found add to database
             }
@@ -118,16 +115,20 @@ app.post("/api/shorturl/new", function(req, res, next) {
   var regex = /^https?:\/\//; //need this format for res.redirect
   
   if (regex.test(url)) {
-  var dnsUrl = url.slice(url.indexOf("//") + 2); //need to remove http(s):// to pass to dns.lookup
+  var tempDnsUrl = url.slice(url.indexOf("//") + 2); //need to remove http(s):// to pass to dns.lookup
+  var slashIndex = tempDnsUrl.indexOf("/"); //need to remove anythng past .com, etc., for dns.lookup
+  var dnsUrl = slashIndex < 0 ? tempDnsUrl : tempDnsUrl.slice(0, slashIndex); 
+  console.log("slashIndex: " + slashIndex);
+  console.log("dnsUrl: " + dnsUrl);
   dns.lookup(dnsUrl, function(err, address, family) {  //check for valid url
-    if (err) { console.log(err); }
+    if (err) { 
+      console.log(err); 
+      res.send("not a valid URL");
+    }
     else if (address !== undefined) {
       console.log("address: " + address);
       findOriginalUrl(url); //check to see if url exists in database
-    } else {
-      res.send("not a valid URL");
-      console.log("dnsUrl: " + dnsUrl);
-    }
+    } 
   });  //dns.lookup
   } else {
   res.send("invalid URL format");

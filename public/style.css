@@ -1,67 +1,54 @@
 /****** Main Styling ******/
 
 body {
-	font-family: 'Roboto', sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #222;
-	background-color: #FaFaFa;
+	background-color: rgb(251, 255, 251);
 	text-align: center;
 	line-height: 1.4em;
 }
-
-.container {
-	padding: 0;
-	margin-top: 40px;
+header {
+  padding: 15px 0px 10px 0px;
+  margin-bottom: 5px;
 }
-
-h3 {
-  margin-top: 30px;
+main {
+  background-color: rgb(241, 239, 239);
+  border-radius: 5px;
+  margin: 0 5%;
+  padding: 10px 0;
 }
-
-.footer {
-	margin-top: 40px;
+#purpose {
+  text-align: left;
+  padding: 0 10%;
 }
-
-.user-stories {
-  position: relative;
-  text-align: justify;
-  max-width: 700px;
-  margin: 15px auto;
+footer {
+	margin-top: 5%;
 }
-code {
-  font-family: monospace;
-  padding: 2px;
-  color: black;
-  background-color: #fff;
-}
-ol {
-	list-style-position: inside;
-}
-ul {
-	list-style-type: none;
-}
-
-li {
-  margin-bottom: 0.5em;
-}
-.user-stories li {
-  margin-bottom: 1em;
-}
-
-a {
-	color: #2574A9;
-}
-
-form {
-  border: solid 1px black;
+#newUrlBox {
+  background-color: rgb(66, 156, 14);
   border-radius: 5px;
   margin: 10px auto;
-  padding: 20px;
-  max-width: 600px;
+  padding: 20px 10px;
+  max-width: 80%;
+  color: white;
 }
-
+#newUrl {
+  font-size: 1.5em;
+}
+form {
+  background-color: rgb(66, 156, 14);
+  border-radius: 5px;
+  margin: 10px auto;
+  padding: 20px 10px;
+  max-width: 80%;
+  color: white;
+}
+code {
+  color: black;
+}
 label {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 input {
@@ -69,6 +56,6 @@ input {
 }
 
 input[type=text] {
-  width: 220px;
-  text-align: center;
+  width: 50%;
+  text-align: left;
 }

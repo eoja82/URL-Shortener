@@ -1,68 +1,68 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/style.css">
+  <title>URL Shortener</title>
 
-<html>
-
-   <head>
-      <title>URL Shortener</title>
-      <link rel="shortcut icon" href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico" type="image/x-icon"/>
-      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-      <link href="/public/style.css" rel="stylesheet" type="text/css">
-   </head>
-
-   <body>
-      <div class="container">
-        <h2>API Project: URL Shortener Microservice</h2>
-        <h3>User Story: </h3>
-        <ol>
-          <li>I can POST a URL to <code>[project_url]/api/shorturl/new</code> and I will receive a shortened URL in the JSON response.<br>Example : <code>{"original_url":"www.google.com","short_url":1}</code></li>
-          <li>If I pass an invalid URL that doesn't follow the <code>http(s)://www.example.com(/more/routes)</code> format, the JSON response will contain an error like <code>{"error":"invalid URL"}</code><br>
-          HINT: to be sure that the submitted url points to a valid site you can use the function <code>dns.lookup(host, cb)</code> from the <code>dns</code> core module.</li>
-          <li>When I visit the shortened URL, it will redirect me to my original link.</li>
-        </ol>
-        
-        <h3>Short URL Creation </h3>
+</head>
+<body>
+  <header>
+      <h2>URL Shortener Microservice</h2>
+  </header>
+  <div class="container">
+    <div id="into">
+      <div id="why">
         <p>
-          example: <code>POST [project_url]/api/shorturl/new</code> - <code>https://www.google.com</code>
-        </p>
-        <form id="urlForm">
-          <label for="url_input">URL to be shortened</label>
-          <input id="url_input" type="text" name="url" value="https://www.freecodecamp.org">
-          <input type="submit" value="POST URL">
-        </form>
-        <p id="newUrl"></p>
-        <h3>Example Usage:</h3>
-        <a href="https://cobalt-barracuda.glitch.me/api/shorturl/1">
-          https://cobalt-barracuda.glitch.me/api/shorturl/1
-        </a>
-
-        <h3>Will Redirect to:</h3>
-        <p>https://www.google.com</p>
-      </div>
-      <div class="footer">
-        <p>
-          Coded by Erik O. for a <a href="https://www.freecodecamp.org">freeCodeCamp</a> project.
+          <b>Why?</b>  A long URL distracts readers from your message.  Also, in situations where there are character liimts, a long URL uses too many characters.
         </p>
       </div>
+    </div>
+    
+    <h3>Create a short URL</h3>
+    <p>
+      example: <code>POST [project_url]/api/shorturl/new</code> - <code>https://www.google.com</code>
+    </p>
+    <form id="urlForm">
+      <label for="url_input">URL to be shortened</label>
+      <input id="url_input" type="text" name="url" value="https://www.freecodecamp.org">
+      <input type="submit" value="POST URL">
+    </form>
+    <p id="newUrl"></p>
+    <h3>Example Usage:</h3>
+    <a href="https://cobalt-barracuda.glitch.me/api/shorturl/1">
+      https://cobalt-barracuda.glitch.me/api/shorturl/1
+    </a>
 
-      <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
-      <script>
-        $(function() {
-          $("#urlForm").submit(function(e) {
-            $.ajax({
-              url: "/api/shorturl/new",
-              type: "post",
-              data: $("#urlForm").serialize(),
-              success: function(data) {
-                $("#newUrl").text(data);
-              }
-            });
-            e.preventDefault();
-          })
-        })
-      </script>
-   </body>
+    <h3>Will Redirect to:</h3>
+    <p>https://www.google.com</p>
+  </div>
+  <div class="footer">
+    <p>
+      Coded by Erik O. for a <a href="https://www.freecodecamp.org">freeCodeCamp</a> project.
+    </p>
+  </div>
 
-
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"
+        integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
+        crossorigin="anonymous"></script>
+  <script>
+    $(function() {
+      $("#urlForm").submit(function(e) {
+        $.ajax({
+          url: "/api/shorturl/new",
+          type: "post",
+          data: $("#urlForm").serialize(),
+          success: function(data) {
+            $("#newUrl").text(data);
+          }
+        });
+        e.preventDefault();
+      })
+    })
+  </script>
+</body>
 </html>
